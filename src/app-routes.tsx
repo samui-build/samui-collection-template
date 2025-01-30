@@ -10,11 +10,21 @@ import { HomeFeature } from './features/home/home.feature';
 const AccountList = lazy(() => import('@/features/account/account-feature-list'));
 const AccountDetail = lazy(() => import('@/features/account/account-feature-detail'));
 const ClusterFeature = lazy(() => import('@/features/cluster/cluster-feature'));
+const CollectionDetailFeature = lazy(
+  () => import('@/features/collection/collection-detail-feature')
+);
+const CollectionGridFeature = lazy(() => import('@/features/collection/collection-grid-feature'));
 
 const router = createBrowserRouter([
   {
     element: (
       <AppLayout
+        links={[
+          { label: 'Home', to: '/' },
+          { label: 'Account', to: '/account' },
+          { label: 'Clusters', to: '/clusters' },
+          { label: 'Collections', to: '/collections' },
+        ]}
         profile={
           <Group>
             <UiThemeToggler />
@@ -31,6 +41,8 @@ const router = createBrowserRouter([
       { path: '/account', element: <AccountList /> },
       { path: '/account/:address', element: <AccountDetail /> },
       { path: '/clusters', element: <ClusterFeature /> },
+      { path: '/collections', element: <CollectionGridFeature /> },
+      { path: '/collections/:collection', element: <CollectionDetailFeature /> },
     ],
   },
 ]);

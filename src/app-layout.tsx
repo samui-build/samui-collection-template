@@ -4,7 +4,20 @@ import { AppShell, Burger, Group, Loader, NavLink, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import { ClusterUiChecker } from '@/features/cluster/ui';
 
-export function AppLayout({ children, profile }: { children: ReactNode; profile: ReactNode }) {
+export interface AppLayoutLink {
+  label: string;
+  to: string;
+}
+
+export function AppLayout({
+  children,
+  links,
+  profile,
+}: {
+  children: ReactNode;
+  links: AppLayoutLink[];
+  profile: ReactNode;
+}) {
   const [opened, { toggle }] = useDisclosure();
   return (
     <AppShell
@@ -21,7 +34,7 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
         <Group justify="space-between" align="center" h="100%" px="md">
           <Group justify="center" align="center">
             <Text component={Link} to="/" size="xl" fw={700}>
-              Placeholder
+              Scaffold
             </Text>
           </Group>
           <Group justify="center" align="center">
@@ -31,9 +44,9 @@ export function AppLayout({ children, profile }: { children: ReactNode; profile:
       </AppShell.Header>
 
       <AppShell.Navbar p="md">
-        <NavLink component={Link} to="/" label="Home" />
-        <NavLink component={Link} to="/account" label="Account" />
-        <NavLink component={Link} to="/clusters" label="Clusters" />
+        {links.map((link) => (
+          <NavLink key={link.to} component={Link} to={link.to} label={link.label} />
+        ))}
       </AppShell.Navbar>
 
       <AppShell.Main>

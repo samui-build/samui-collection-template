@@ -7,11 +7,11 @@ export function HomeUiWelcome() {
       <Title className={classes.title} ta="center" mt={100}>
         Welcome to{' '}
         <Text inherit variant="gradient" component="span" gradient={{ from: 'pink', to: 'yellow' }}>
-          Placeholder
+          Scaffold
         </Text>
       </Title>
       <Text c="dimmed" ta="center" size="lg" maw={580} mx="auto" mt="xl">
-        Placeholder is a starter project for Metaplex Core NFT Collections.
+        Scaffold is a starter project for Metaplex Core NFT Collections.
       </Text>
     </>
   );
