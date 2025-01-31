@@ -3,7 +3,7 @@ import { AssetInfo } from '../data-access';
 
 export function CollectionUiCard({ asset }: { asset: AssetInfo }) {
   return (
-    <Card withBorder radius="lg" shadow="lg" maw={400}>
+    <Card withBorder radius="lg" shadow="lg">
       {asset?.image ? (
         <Card.Section>
           <AspectRatio ratio={1} mx="auto">
