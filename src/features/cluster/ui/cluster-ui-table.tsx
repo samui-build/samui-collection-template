@@ -31,7 +31,7 @@ export function ClusterUiTable() {
                   )}
                 </Text>
                 <Text size="xs">Network: {item.network ?? 'custom'}</Text>
-                <div>{item.endpoint}</div>
+                <div>{obfuscateSecret(item.endpoint)}</div>
               </Table.Td>
               <Table.Td>
                 <Button
@@ -53,4 +53,8 @@ export function ClusterUiTable() {
       </Table>
     </div>
   );
+}
+
+function obfuscateSecret(url: string) {
+  return url.replace(url.split('=')[1], '[REDACTED]');
 }

@@ -26,12 +26,15 @@ export function ClusterUiModal() {
           value={endpoint}
           onChange={(e) => setEndpoint(e.target.value)}
         />
-        <Select value={network} onChange={(value) => setNetwork(value as ClusterNetwork)}>
-          <option value={undefined}>Select a network</option>
-          <option value={ClusterNetwork.Devnet}>Devnet</option>
-          <option value={ClusterNetwork.Testnet}>Testnet</option>
-          <option value={ClusterNetwork.Mainnet}>Mainnet</option>
-        </Select>
+        <Select
+          value={network}
+          onChange={(value) => setNetwork(value as ClusterNetwork)}
+          data={[
+            { label: 'Devnet', value: ClusterNetwork.Devnet },
+            { label: 'Testnet', value: ClusterNetwork.Testnet },
+            { label: 'Mainnet', value: ClusterNetwork.Mainnet },
+          ]}
+         />
         <Button
           onClick={() => {
             addCluster({ name, network, endpoint });
