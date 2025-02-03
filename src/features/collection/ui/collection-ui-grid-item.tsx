@@ -1,25 +1,19 @@
-import { Link } from 'react-router-dom';
-import { Anchor, AspectRatio, Card, Group, Image, UnstyledButton } from '@mantine/core';
-import { Collection } from '../data-access';
+import { CollectionV1 } from '@metaplex-foundation/mpl-core';
+import { Skeleton, Text } from '@mantine/core';
+import { useGetAsset } from '@/features/collection/data-access';
+import { CollectionUiCard } from '@/features/collection/ui/collection-ui-card';
 
-export function CollectionUiGridItem({ collection }: { collection: Collection }) {
+export function CollectionUiGridItem({ collection }: { collection: CollectionV1 }) {
+  const jsonInfo = useGetAsset(collection);
+  const asset = jsonInfo.data;
+
   return (
-    <Card withBorder radius="lg" shadow="lg">
-      <Card.Section>
-        <UnstyledButton component={Link} to={collection.id}>
-          <AspectRatio ratio={16 / 9} mx="auto">
-            <Image src={collection.imageUrl} alt={collection.name} />
-          </AspectRatio>
-        </UnstyledButton>
-      </Card.Section>
-
-      <Card.Section className="classes.section" m="md" mb={0}>
-        <Group justify="space-between">
-          <Anchor component={Link} to={collection.id} fz="xl" fw={700}>
-            {collection.name}
-          </Anchor>
-        </Group>
-      </Card.Section>
-    </Card>
+    <Skeleton visible={jsonInfo.isLoading} radius="lg">
+      {asset ? (
+        <CollectionUiCard asset={asset} to={collection.publicKey} />
+      ) : (
+        <Text>Error loading collection info</Text>
+      )}
+    </Skeleton>
   );
 }

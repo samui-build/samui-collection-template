@@ -4,11 +4,11 @@ import { useParams } from 'react-router-dom';
 import { Alert, Container, Loader, SimpleGrid } from '@mantine/core';
 import { CollectionUiMint } from '@/features/collection/ui/collection-ui-mint';
 import {
+  collectionConfigs,
   useFetchCandyGuard,
   useFetchCandyMachine,
   useGetAsset,
   useGetCollection,
-  useGetCollections,
   useMintAsset,
 } from './data-access';
 import { CollectionUiCard } from './ui/collection-ui-card';
@@ -17,8 +17,7 @@ export default function CollectionDetailFeature() {
   const { collection } = useParams() as { collection: string };
   const query = useGetCollection({ collection });
 
-  const { items: collections } = useGetCollections();
-  const found = collections.find((item) => item.id === collection);
+  const found = collectionConfigs.find(({ collectionMint }) => collectionMint === collection);
 
   if (!found) {
     return (
@@ -34,8 +33,8 @@ export default function CollectionDetailFeature() {
         <Loader />
       ) : query.data ? (
         <CollectionDetail
-          candyMachine={publicKey(found.cm)}
-          candyGuard={publicKey(found.guard)}
+          candyMachine={publicKey(found.candyMachine)}
+          candyGuard={publicKey(found.candyGuard)}
           collection={query.data}
         />
       ) : (
@@ -73,7 +72,9 @@ function CollectionDetail({
           candyMachine={candyMachineQuery.data}
           candyGuard={candyGuardQuery.data}
           loading={mutation.isPending}
-          mint={() => mutation.mutateAsync(candyMachineQuery.data)}
+          mint={(guard) =>
+            mutation.mutateAsync({ cm: candyMachineQuery.data, cg: candyGuardQuery.data, guard })
+          }
         />
       ) : null}
     </SimpleGrid>

@@ -43,8 +43,10 @@ export async function sendAndConfirmWalletAdapter(
     strategy: { type: 'blockhash', ...blockhash },
     commitment: settings?.commitment || 'confirmed',
   });
+  const [deserialized] = base58.deserialize(signature);
+
   return {
-    signature: base58.deserialize(signature),
+    signature: deserialized,
     confirmation,
   };
 }

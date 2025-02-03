@@ -18,7 +18,7 @@ export function AppLayout({
   links: AppLayoutLink[];
   profile: ReactNode;
 }) {
-  const [opened, { toggle }] = useDisclosure();
+  const [opened, { toggle, close }] = useDisclosure();
   return (
     <AppShell
       header={{ height: 60 }}
@@ -30,9 +30,9 @@ export function AppLayout({
       padding="md"
     >
       <AppShell.Header>
-        <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
         <Group justify="space-between" align="center" h="100%" px="md">
-          <Group justify="center" align="center">
+          <Group justify="center" align="center" wrap="nowrap">
+            <Burger opened={opened} onClick={toggle} hiddenFrom="sm" size="sm" />
             <Text component={Link} to="/" size="xl" fw={700}>
               Scaffold
             </Text>
@@ -45,7 +45,15 @@ export function AppLayout({
 
       <AppShell.Navbar p="md">
         {links.map((link) => (
-          <NavLink key={link.to} component={Link} to={link.to} label={link.label} />
+          <NavLink
+            key={link.to}
+            component={Link}
+            to={link.to}
+            label={link.label}
+            onClick={() => {
+              close();
+            }}
+          />
         ))}
       </AppShell.Navbar>
 
